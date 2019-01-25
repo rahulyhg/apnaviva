@@ -1,6 +1,6 @@
 <?php include "includes/header.php" ?>
     <!-- Navigation -->
-  <?php include "includes/navigation.php" ?>
+  <?php include "includes/navigation3.php" ?>
 
     <!-- Page Content -->
     <div class="container">
@@ -11,40 +11,44 @@
         <div class="col-lg-8">
 
         <?php
+          if(isset($_POST['search_submit'])){
+            $search=$_POST['search'];
+          }
           $per_page=5;
          if(isset($_GET['page'])){
            if($_GET['page']<=0){
           header("Location:pagenotfound.php");
            }else{
+
            $page=$_GET['page'];
            }
-           
-           
+
+
          }else{
-           header("Location:index.php?page=1");
+           header("Location:search3.php?page=1");
          }
 
          if($page==1){
            $start_count=0;
          }
-         
+
          else{
            $start_count=($page*$per_page)-$per_page;
          }
 
 
-         $questions_count="SELECT * from posts";
+         $questions_count="SELECT * from posts3 where post_question LIKE '%$search%'";
          $count_query=mysqli_query($connection,$questions_count);
          $count=mysqli_num_rows($count_query);
          $count=ceil($count/$per_page);
-         
+
          if($count<1){
            echo "<br><br>";
            echo "<h2 class='text-danger text-center'>NO QUESTIONS YET</h2>";
          }
          else{
-         
-         $select_question="SELECT * from posts LIMIT $start_count,$per_page";
+
+         $select_question="SELECT * from posts3 where post_question LIKE '%$search%' LIMIT $start_count,$per_page";
          $select_query=mysqli_query($connection,$select_question);
          if(!$select_query){
            die("Connection failed ".mysqli_error($connection));
@@ -92,10 +96,10 @@
          break;
        }
        else if($i==$page){
-         echo "<li class='page-item active'><a class='page-link' href='index.php?page=$i'>$i</a></li>";
+         echo "<li class='page-item active'><a class='page-link' href='search3.php?page=$i'>$i</a></li>";
        }
        else{
-         echo "<li class='page-item'><a class='page-link' href='index.php?page=$i'>$i</a></li>";
+         echo "<li class='page-item'><a class='page-link' href='search3.php?page=$i'>$i</a></li>";
        }
 
   }
@@ -121,7 +125,7 @@
            if(!$insert_query){
              die("Connection failed ".mysqli_error($connection));
            }
-           header('Location:index.php');
+           header('Location:search3.php?page=1');
 
        }
 
@@ -137,12 +141,12 @@
                   <input type="text" name="author_name" class="form-control" placeholder="Enter Your Name" required>
                 </div>
                 <div class="form-group">
- 
+
                   <select  name="post_subject_id">
                     <option value="">Select Subject</option>
                     <?php
 
-                      $select_query="SELECT * from subjects";
+                      $select_query="SELECT * from subjects3";
                       $query=mysqli_query($connection,$select_query);
                       while($row=mysqli_fetch_assoc($query)){
                         $sub_id=$row['sub_id'];
@@ -190,7 +194,7 @@
                </div>
      -->
                <!-- Subjects Widget -->
-          <?php include "includes/subjects_widget.php" ?>
+          <?php include "includes/subjects_widget3.php" ?>
           <!-- Side Widget -->
           <div class="card my-4">
             <h5 class="card-header">About Project</h5>

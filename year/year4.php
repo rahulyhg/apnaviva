@@ -1,6 +1,6 @@
 <?php include "includes/header.php" ?>
     <!-- Navigation -->
-  <?php include "includes/navigation.php" ?>
+  <?php include "includes/navigation4.php" ?>
 
     <!-- Page Content -->
     <div class="container">
@@ -11,7 +11,11 @@
         <div class="col-lg-8">
 
         <?php
-          $per_page=5;
+         $per_page=5;
+         if(isset($_GET['s_id'])){
+           $s_id=$_GET['s_id'];
+         }
+
          if(isset($_GET['page'])){
            if($_GET['page']<=0){
           header("Location:pagenotfound.php");
@@ -19,9 +23,8 @@
            $page=$_GET['page'];
            }
            
-           
          }else{
-           header("Location:index.php?page=1");
+           header("Location:year4.php?page=1");
          }
 
          if($page==1){
@@ -33,18 +36,18 @@
          }
 
 
-         $questions_count="SELECT * from posts";
+         $questions_count="SELECT * from posts4";
          $count_query=mysqli_query($connection,$questions_count);
          $count=mysqli_num_rows($count_query);
          $count=ceil($count/$per_page);
-         
+
          if($count<1){
            echo "<br><br>";
            echo "<h2 class='text-danger text-center'>NO QUESTIONS YET</h2>";
          }
          else{
-         
-         $select_question="SELECT * from posts LIMIT $start_count,$per_page";
+
+         $select_question="SELECT * from posts4 LIMIT $start_count,$per_page";
          $select_query=mysqli_query($connection,$select_question);
          if(!$select_query){
            die("Connection failed ".mysqli_error($connection));
@@ -88,14 +91,13 @@
   for($i=1;$i<=$count;$i++){
 
        if($page>$count){
-         header("Location:pagenotfound.php");
-         break;
+        header("Location:pagenotfound.php");
        }
        else if($i==$page){
-         echo "<li class='page-item active'><a class='page-link' href='index.php?page=$i'>$i</a></li>";
+         echo "<li class='page-item active'><a class='page-link' href='year4.php?page=$i'>$i</a></li>";
        }
        else{
-         echo "<li class='page-item'><a class='page-link' href='index.php?page=$i'>$i</a></li>";
+         echo "<li class='page-item'><a class='page-link' href='year4.php?page=$i'>$i</a></li>";
        }
 
   }
@@ -114,14 +116,14 @@
            $name=$_POST['author_name'];
            $name=mysqli_real_escape_string($connection,$name);
            $pid= $_POST['post_subject_id'];
-           $insert_post="INSERT INTO `posts` (`post_id`, `post_question`, `post_answer`, `post_date`,
+           $insert_post="INSERT INTO `posts4` (`post_id`, `post_question`, `post_answer`, `post_date`,
                          `post_author_name`,`post_subject_id`) VALUES('','$ques','$ans',now(),'$name','$pid')";
            $insert_query=mysqli_query($connection,$insert_post);
 
            if(!$insert_query){
              die("Connection failed ".mysqli_error($connection));
            }
-           header('Location:index.php');
+           header('Location:year4.php');
 
        }
 
@@ -132,17 +134,17 @@
           <div class="card my-4">
             <h5 class="card-header">Post Your Question</h5>
             <div class="card-body">
-              <form action="" method="post" onsubmit="return confirm('Click Ok to add the question')">
+              <form action="" method="post" onsubmit="return confirm('Click Ok to add the question?')">
                 <div class="form-group">
                   <input type="text" name="author_name" class="form-control" placeholder="Enter Your Name" required>
                 </div>
                 <div class="form-group">
- 
+                  
                   <select  name="post_subject_id">
                     <option value="">Select Subject</option>
                     <?php
 
-                      $select_query="SELECT * from subjects";
+                      $select_query="SELECT * from subjects4";
                       $query=mysqli_query($connection,$select_query);
                       while($row=mysqli_fetch_assoc($query)){
                         $sub_id=$row['sub_id'];
@@ -176,21 +178,21 @@
         <!-- Sidebar Widgets Column -->
         <div class="col-md-4">
 
-          <!-- Search Widget -->
-         <!--           <div class="card my-4">
-                 <h5 class="card-header">Search</h5>
-                 <div class="card-body">
-                   <div class="input-group">
-                     <input type="text" class="form-control" placeholder="Search for...">
-                     <span class="input-group-btn">
-                       <button class="btn btn-secondary" type="button">Go!</button>
-                     </span>
-                   </div>
-                 </div>
-               </div>
-     -->
-               <!-- Subjects Widget -->
-          <?php include "includes/subjects_widget.php" ?>
+     <!-- Search Widget -->
+    <!--           <div class="card my-4">
+            <h5 class="card-header">Search</h5>
+            <div class="card-body">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                  <button class="btn btn-secondary" type="button">Go!</button>
+                </span>
+              </div>
+            </div>
+          </div>
+-->
+          <!-- Subjects Widget -->
+          <?php include "includes/subjects_widget4.php" ?>
           <!-- Side Widget -->
           <div class="card my-4">
             <h5 class="card-header">About Project</h5>

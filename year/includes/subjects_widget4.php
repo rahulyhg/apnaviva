@@ -1,6 +1,6 @@
 <div class="card my-4">
-    <h4 class="card-header">Question Search (Year 1)</h4>
-    <form action="search.php?page=1" method="post">
+    <h4 class="card-header">Question Search (Year 4)</h4>
+    <form action="search4.php?page=1" method="post">
       <div class="input-group">
           <input type="text" name="search" class="form-control">
           <span class="input-group-btn">
@@ -8,12 +8,13 @@
                   Search
           </button>
           </span>
-        </div>
+          </div>
     </form>
+
 </div>
 
 <div class="card my-4">
-  <h5 class="card-header">Subject Wise Questions (Year 1)</h5>
+  <h5 class="card-header">Subject Wise Questions (Year 4)</h5>
   <div class="card-body">
     <div class="row">
       <div class="col-lg-12">
@@ -21,17 +22,17 @@
 
             <?php
 
-               $select_query="SELECT * from subjects";
+               $select_query="SELECT * from subjects4";
                $query=mysqli_query($connection,$select_query);
 
                while ( $row=mysqli_fetch_assoc($query)) {
                  $sub_title=$row['sub_title'];
                  $sub_id=$row['sub_id'];
              ?>
-          <li class="p-2">  <a class="btn btn-primary" style="width:250px" href="subject.php?s_id=<?php echo $sub_id; ?>"><?php echo ucwords($sub_title); ?></a></li>
+          <li class="p-2">  <a class="btn btn-primary"  style="width:250px" href="subjects4.php?s_id=<?php echo $sub_id; ?>"><?php echo ucwords($sub_title); ?></a></li>
 <?php } ?>
         <hr>
-        <li><a href="index.php" class="btn btn-dark">All Subject Questions</a></li>
+        <li><a href="year4.php" class="btn btn-dark">All Subject Questions</a></li>
         </ul>
       </div>
 

@@ -1,6 +1,9 @@
-<footer class="py-5 bg-dark">
-  <div class="container">
-    <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+<footer class="py-4 bg-dark">
+  <div style="color:white" class="container text-center">
+    <div class="copyright" >
+          <strong>Copyright</strong>
+        &copy;<strong>APNAVIVA</strong>
+      </div>
   </div>
   <!-- /.container -->
 </footer>
